@@ -22,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -43,30 +43,3 @@ jobs:
         with:
           name: build-artifacts
           path: ./build # Adjust to the actual build output directory.
-
-  deploy:
-    name: Deploy Server
-    runs-on: ubuntu-latest
-    needs: build-and-lint
-    if: github.ref == 'refs/heads/main' && success()
-
-    steps:
-      # Step 1: Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: npm install --production
-
-      # Step 4: Deploy to your environment (customize for your deployment method)
-      - name: Deploy to server
-        run: |
-          echo "Deploying server..."
-          # Add your deployment commands here
