@@ -31,15 +31,3 @@ jobs:
       # Step 4: Lint the code
       - name: Lint code
         run: npm run lint
-
-      # Step 5: Build the server (if applicable)
-      - name: Build server
-        run: npm run build # Replace 'build' with your actual build script if it differs.
-
-      # Optional: Save build artifacts
-      - name: Archive build output
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: ./build # Adjust to the actual build output directory.
