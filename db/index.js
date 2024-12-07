@@ -1,5 +1,4 @@
 const { Pool } = require("pg");
-const { connect } = require("../routes/user");
 require("dotenv").config();
 
 const pool = new Pool({

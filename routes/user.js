@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
+const Responder = require("../middleware/responder");
 
 // Get current user
 router.get("/", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM users");
-    res.json(result.rows);
+    Responder.success(res, "Users fetched successfully", result.rows);
   } catch (err) {
     console.log(err);
-    res.status(500).send("Internal Server Error");
+    Responder.error(res, "An error occurred while fetching users", err);
   }
-  // res.send("this is user route");
 });
 
 // Get user by ID
