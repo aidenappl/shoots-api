@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || '';
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || '';
@@ -28,21 +28,23 @@ export const generateRefreshToken = (user: Models.User) => {
 };
 
 // Function to verify access token
-export const verifyAccessToken = (token: string) => {
+export const verifyAccessToken = (token: string): JwtPayload | null => {
 	try {
-		return jwt.verify(token, accessTokenSecret);
+		const tokenVery = jwt.verify(token, accessTokenSecret);
+		return tokenVery as JwtPayload;
 	} catch (error) {
 		console.log('Error verifying access token:', error);
-		return null;
+		throw new Error('Invalid access token');
 	}
 };
 
 // Function to verify refresh token
-export const verifyRefreshToken = (token: string) => {
+export const verifyRefreshToken = (token: string): JwtPayload | null => {
 	try {
-		return jwt.verify(token, refreshTokenSecret);
+		const tokenVery = jwt.verify(token, refreshTokenSecret);
+		return tokenVery as JwtPayload;
 	} catch (error) {
 		console.log('Error verifying refresh token:', error);
-		return null;
+		throw new Error('Invalid access token');
 	}
 };

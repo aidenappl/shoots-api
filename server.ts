@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { connectToDatabase } from './db';
 
@@ -23,6 +24,7 @@ if (!process.env.DATABASE_URL) {
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // Import routes
 import userRoutes from './routes/user';

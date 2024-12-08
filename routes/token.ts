@@ -1,9 +1,8 @@
-import express, { Request, Response } from 'express';
-import Responder from '../middleware/responder';
+import express from 'express';
+import { refreshToken } from '../controllers/refreshTokenController';
+
 const router = express.Router();
 
-router.post('/refresh', async (req: Request, res: Response) => {
-	Responder.success(res, 'Token refreshed successfully', req.body);
-});
+router.post('/refresh', refreshToken);
 
 export default router;
