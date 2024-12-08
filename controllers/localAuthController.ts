@@ -14,6 +14,7 @@ interface RegisterRequest {
 const registerUser = async (req: Request, res: Response) => {
 	const { name, email, password }: RegisterRequest = req.body;
 
+	// Check if the required fields are provided
 	if (!name || !email || !password) {
 		Responder.error(res, 'Name, email, and password are required', null, 422);
 		return;
