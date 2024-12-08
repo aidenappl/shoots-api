@@ -4,6 +4,28 @@ import Responder from '../middleware/responder';
 import { User } from '../models/model';
 import { Request, Response } from 'express';
 
+/**
+ * Refresh token controller
+ * @param req Express request
+ * @param res Express response
+ * @returns void
+ * @route /auth/refresh
+ * @method POST
+ * @example
+ * 	/auth/refresh
+ * 	{
+ * 		"refresh_token": "refresh_token"
+ * 	}
+ * @description
+ * This controller is used to refresh the user's access token
+ * Steps:
+ * 1. It receives the refresh token from the request body or cookies
+ * 2. It verifies the refresh token
+ * 3. It generates a new access token and a new refresh token
+ * 4. It sets the tokens as cookies
+ * 5. It sends a success response with the new access token and refresh token
+ * 6. If an error occurs, it sends an error response
+ */
 const refreshToken = async (req: Request, res: Response) => {
 	let { refreshToken } = req.cookies;
 	if (!refreshToken && !req.body.refreshToken)

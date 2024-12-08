@@ -24,6 +24,9 @@ declare namespace Models {
 	// Group Model
 	interface Group extends Timestamps {
 		id: number;
+		screen_time_goal: number;
+		code: string;
+		stake: number;
 		name: string;
 	}
 
@@ -31,20 +34,14 @@ declare namespace Models {
 	interface UserGroup extends Timestamps {
 		user_id: number;
 		group_id: number;
-		screen_time_goal: number;
-	}
-
-	// UserDetails Model
-	interface UserDetails {
-		user_id: number;
-		bio?: string;
 	}
 
 	// ScreenTime Model
 	interface ScreenTime extends Timestamps {
 		id: number;
 		user_id: number;
-		total_time: number;
+		group_id: number;
+		submitted_time: number;
 	}
 }
 

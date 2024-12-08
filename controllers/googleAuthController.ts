@@ -4,6 +4,9 @@ import { Authentication, User } from '../models/model';
 import { setTokensAsCookies } from '../utils/jwtCookies';
 import { generateAccessToken, generateRefreshToken } from '../utils/jwt';
 
+/**
+ * Google response interface
+ */
 interface GoogleResponse {
 	id: string;
 	email: string;
@@ -14,6 +17,32 @@ interface GoogleResponse {
 	picture: string;
 }
 
+/**
+ * Google authentication controller
+ * @param req Express request
+ * @param res Express response
+ * @returns void
+ * @route /auth/google
+ * @method POST
+ * @example
+ * 	/auth/google
+ * 	{
+ * 		"googleToken": "googleToken"
+ * 	}
+ * @description
+ * This controller is used to authenticate a user using Google OAuth2.0
+ * 	Steps:
+ * 1. It receives a googleToken from the request body
+ * 2. It sends a request to Google's OAuth2.0 API to get the user's information
+ * 3. It checks if the user exists in the database
+ * 4. If the user does not exist, it creates a new user and authentication strategy
+ * 5. If the user exists, it checks if the user has a google_id
+ * 6. If the user does not have a google_id, it updates the user's google_id
+ * 7. It generates an access token and a refresh token
+ * 8. It sets the tokens as cookies
+ * 9. It sends a success response with the user's information, access token, and refresh token
+ * 10. If an error occurs, it sends an error response
+ */
 const googleAuth = async (req: Request, res: Response) => {
 	const { googleToken } = req.body;
 	if (!googleToken) {

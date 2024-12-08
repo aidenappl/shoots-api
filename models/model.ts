@@ -37,34 +37,38 @@ Authentication.init(
 	{ sequelize, modelName: 'authentications', timestamps: false },
 );
 
-class Group extends Model {}
+class Group extends Model implements Models.Group {
+	id!: number;
+	name!: string;
+	screen_time_goal!: number;
+	code!: string;
+	stake!: number;
+	inserted_at!: Date;
+}
 Group.init(
 	{
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		name: { type: DataTypes.STRING },
+		screen_time_goal: { type: DataTypes.INTEGER },
+		code: { type: DataTypes.STRING },
+		stake: { type: DataTypes.FLOAT },
 		inserted_at: { type: DataTypes.DATE },
 	},
 	{ sequelize, modelName: 'group', timestamps: false },
 );
 
-class UserGroup extends Model {}
+class UserGroup extends Model implements Models.UserGroup {
+	user_id!: number;
+	group_id!: number;
+	inserted_at!: Date;
+}
 UserGroup.init(
 	{
 		user_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
 		group_id: { type: DataTypes.INTEGER, references: { model: Group, key: 'id' } },
-		screen_time_goal: { type: DataTypes.INTEGER },
 		inserted_at: { type: DataTypes.DATE },
 	},
 	{ sequelize, modelName: 'user_groups', timestamps: false },
-);
-
-class UserDetails extends Model {}
-UserDetails.init(
-	{
-		user_id: { type: DataTypes.INTEGER, primaryKey: true, references: { model: User, key: 'id' } },
-		bio: { type: DataTypes.TEXT },
-	},
-	{ sequelize, modelName: 'user_details', timestamps: false },
 );
 
 class ScreenTime extends Model {}
@@ -72,10 +76,11 @@ ScreenTime.init(
 	{
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		user_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
-		total_time: { type: DataTypes.INTEGER },
+		group_id: { type: DataTypes.INTEGER, references: { model: Group, key: 'id' } },
+		submitted_time: { type: DataTypes.INTEGER },
 		inserted_at: { type: DataTypes.DATE },
 	},
 	{ sequelize, modelName: 'screen_time', timestamps: false },
 );
 
-export { User, Authentication, Group, UserGroup, UserDetails, ScreenTime };
+export { User, Authentication, Group, UserGroup, ScreenTime };

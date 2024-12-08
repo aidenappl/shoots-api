@@ -30,11 +30,13 @@ app.use(cookieParser());
 import userRoutes from './routes/user';
 import authRoutes from './routes/auth';
 import tokenRoutes from './routes/token';
+import groupRoutes from './routes/groups';
 
 // Use routes
 app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/token', tokenRoutes);
+app.use('/groups', groupRoutes);
 
 // Define the port
 const port = process.env.PORT || 3000;
