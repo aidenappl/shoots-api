@@ -111,12 +111,11 @@ const loginUser = async (req: Request, res: Response) => {
 };
 
 const logoutUser = async (req: Request, res: Response) => {
-	try {
-		Responder.success(res, 'User logged out successfully', null);
-	} catch (err) {
-		console.log(err);
-		Responder.error(res, 'An error occurred while logging out user', err);
-	}
+	// Clear the accessToken and refreshToken cookies
+	res.cookie('accessToken', '', { expires: new Date(0) });
+	res.cookie('refreshToken', '', { expires: new Date(0) });
+
+	Responder.success(res, 'User logged out successfully', null);
 };
 
 export { registerUser, loginUser, logoutUser };
