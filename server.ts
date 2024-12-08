@@ -12,11 +12,6 @@ dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Test DB connection
-db.connect()
-	.then(() => console.log('Connected to the database'))
-	.catch((err: Error) => console.error('Error connecting to the database', err.stack));
-
 // Import routes
 import userRoutes from './routes/user';
 import authRoutes from './routes/auth';
@@ -30,7 +25,17 @@ app.use('/token', tokenRoutes);
 // Define the port
 const port = process.env.PORT || 3000;
 
-// Start the server
-app.listen(port, () => {
-	console.log(`Shoots server is running on port ${port}`);
-});
+// Start the server and connect to the database
+const startServer = async () => {
+	try {
+		await db.connect();
+		app.listen(port, () => {
+			console.log(`Shoots server is running on port ${port}`);
+		});
+	} catch (err) {
+		console.error('Failed to start the server:', err);
+		process.exit(1); // Exit process on failure
+	}
+};
+
+startServer();

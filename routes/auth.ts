@@ -1,21 +1,13 @@
-import express, { Request, Response } from 'express';
-import Responder from '../middleware/responder';
+import express from 'express';
+import { loginUser, logoutUser, registerUser } from '../controllers/localAuthController';
+import { githubAuth } from '../controllers/githubAuthController';
+import { googleAuth } from '../controllers/googleAuthController';
 const router = express.Router();
 
-router.post('/google', async (req: Request, res: Response) => {
-	Responder.success(res, 'Google login successful', req.body);
-});
-
-router.post('/github', async (req: Request, res: Response) => {
-	Responder.success(res, 'Github hit successful', req.body);
-});
-
-router.post('/login', async (req: Request, res: Response) => {
-	Responder.success(res, 'Local login hit successful', req.body);
-});
-
-router.post('/register', async (req: Request, res: Response) => {
-	Responder.success(res, 'Register hit successful', req.body);
-});
+router.post('/google', googleAuth);
+router.post('/github', githubAuth);
+router.post('/login', loginUser);
+router.post('/register', registerUser);
+router.delete('/logout', logoutUser);
 
 export default router;

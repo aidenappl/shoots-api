@@ -1,14 +1,12 @@
 import express from 'express';
 import { Request, Response } from 'express';
 const router = express.Router();
-import db from '../db';
 import Responder from '../middleware/responder';
 
 // [GET] Get current user
 router.get('/', async (req: Request, res: Response) => {
 	try {
-		const result = await db.query('SELECT * FROM users');
-		Responder.success(res, 'Users fetched successfully', result);
+		Responder.success(res, 'Users fetched successfully');
 	} catch (err) {
 		console.log(err);
 		Responder.error(res, 'An error occurred while fetching users', err);
