@@ -29,7 +29,8 @@ cd shoots-api
 Run the following command to install required packages:
 
 ```bash
-npm install
+npm install &&
+npm install -g ts-node
 ```
 
 ### 3. Set Up Environment Variables

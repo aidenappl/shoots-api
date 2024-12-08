@@ -8,6 +8,12 @@ import db from './db';
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Environment Checks
+if (!process.env.DATABASE_URL) {
+	console.error('Missing DATABASE_URL environment variable.');
+	process.exit(1);
+}
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
