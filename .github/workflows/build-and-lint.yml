@@ -31,3 +31,7 @@ jobs:
       # Step 4: Lint the code
       - name: Lint code
         run: npm run lint
+
+      # Step 5: Build the code
+      - name: Build code
+        run: npm run build
