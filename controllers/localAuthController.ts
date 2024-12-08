@@ -66,7 +66,7 @@ const loginUser = async (req: Request, res: Response) => {
 					Responder.error(res, 'Invalid email or password', null, 401);
 				}
 			} else {
-				Responder.error(res, 'Invalid email or password', null, 401);
+				Responder.error(res, 'Invalid strategy', null, 401);
 			}
 		} else {
 			Responder.error(res, 'User not found', null, 404);
