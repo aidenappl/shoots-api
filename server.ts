@@ -3,10 +3,16 @@ const app = express();
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import db from './db';
+import { connectToDatabase } from './db';
 
 import dotenv from 'dotenv';
 dotenv.config();
+
+// Environment Checks
+if (!process.env.DATABASE_URL) {
+	console.error('Missing DATABASE_URL environment variable.');
+	process.exit(1);
+}
 
 // Middleware
 app.use(cors());
@@ -28,7 +34,7 @@ const port = process.env.PORT || 3000;
 // Start the server and connect to the database
 const startServer = async () => {
 	try {
-		await db.connect();
+		await connectToDatabase();
 		app.listen(port, () => {
 			console.log(`Shoots server is running on port ${port}`);
 		});
