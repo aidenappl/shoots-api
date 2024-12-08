@@ -37,12 +37,22 @@ npm install -g ts-node
 
 ### 3. Set Up Environment Variables
 
-Create a .env file in the project root and add the following variables:
+Create a `.env` file in the project root and add the following variables:
 
 ```env
+# Application
 PORT=3000
 NODE_ENV=development
-DATABASE_URL=  # Only needed for production
+
+# Database Configuration
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=shoots_db
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+
+# Only needed for production
+DATABASE_URL=
 ```
 
 ## Local Database Setup

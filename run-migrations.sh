@@ -27,28 +27,28 @@ if [ "$NODE_ENV" = "production" ]; then
         psql "$DATABASE_URL" -f "$migration"
     done
 else
-    # Local development settings
-    DB_USER=postgres
-    DB_PASSWORD=postgres
-    DB_NAME=shoots_db
-    DB_HOST=localhost
-    DB_PORT=5432
+    # Check required environment variables
+    if [ -z "$POSTGRES_USER" ] || [ -z "$POSTGRES_PASSWORD" ] || [ -z "$POSTGRES_DB" ] || [ -z "$POSTGRES_HOST" ] || [ -z "$POSTGRES_PORT" ]; then
+        echo "Error: Missing required environment variables. Please check your .env file."
+        echo "Required variables: POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT"
+        exit 1
+    fi
 
     # Wait for PostgreSQL to be ready
     echo "Waiting for PostgreSQL to be ready..."
-    while ! pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER > /dev/null 2>&1; do
+    while ! pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER > /dev/null 2>&1; do
         sleep 1
     done
 
     # Create database if it doesn't exist
     echo "Ensuring database exists..."
-    PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d postgres -c "CREATE DATABASE $DB_NAME;" 2>/dev/null || true
+    PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -d postgres -c "CREATE DATABASE $POSTGRES_DB;" 2>/dev/null || true
 
     # Run all migration files in order
     echo "Running migrations in development mode..."
     for migration in migrations/*.sql; do
         echo "Running migration: $migration"
-        PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -f "$migration"
+        PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -d $POSTGRES_DB -f "$migration"
     done
 fi
 
