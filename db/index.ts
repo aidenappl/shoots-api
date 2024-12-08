@@ -12,17 +12,14 @@ const sequelize = new Sequelize(process.env.DATABASE_URL || '', {
 	},
 });
 
-const connectToDatabase = async (): Promise<void> => {
+const connectToDatabase = async () => {
 	try {
 		await sequelize.authenticate();
 		console.log('Connected to the database');
-	} catch (err) {
-		console.error('Error connecting to the database:', err instanceof Error ? err.message : err);
+	} catch (err: Error | unknown) {
+		console.error('Error connecting to the database', err);
 		process.exit(1); // Exit the application if the connection fails
 	}
 };
 
-export default {
-	sequelize,
-	connect: connectToDatabase, // Explicitly export connect to ensure it’s manually called
-};
+export { sequelize, connectToDatabase };

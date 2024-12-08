@@ -26,6 +26,7 @@ class Responder {
 	 * @param {number} [statusCode=500] - HTTP status code
 	 */
 	static error(res: Response, message: string, error: unknown = null, statusCode: number = 500) {
+		message = message.toLowerCase();
 		res.status(statusCode).json({
 			message,
 			error,
