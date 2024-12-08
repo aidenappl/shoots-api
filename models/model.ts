@@ -77,7 +77,4 @@ ScreenTime.init(
 	{ sequelize, modelName: 'screen_time', timestamps: false },
 );
 
-User.hasOne(Authentication, { foreignKey: 'user_id' });
-Authentication.belongsTo(User, { foreignKey: 'user_id' });
-
 export { User, Authentication, Group, UserGroup, UserDetails, ScreenTime };
