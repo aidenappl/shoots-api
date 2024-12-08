@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import Responder from '../middleware/responder';
 import bcrypt from 'bcrypt';
 import { Authentication, User } from '../models/model';
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt';
+import { setTokensAsCookies } from '../utils/jwtCookies';
 
 interface RegisterRequest {
 	name: string;
@@ -12,6 +14,7 @@ interface RegisterRequest {
 const registerUser = async (req: Request, res: Response) => {
 	const { name, email, password }: RegisterRequest = req.body;
 
+	// Check if the required fields are provided
 	if (!name || !email || !password) {
 		Responder.error(res, 'Name, email, and password are required', null, 422);
 		return;
@@ -32,7 +35,22 @@ const registerUser = async (req: Request, res: Response) => {
 		const newUser = await User.create({ name, email });
 		await Authentication.create({ user_id: newUser.id, password: hashedPassword });
 
-		Responder.success(res, 'User registered successfully', newUser);
+		const accessToken = generateAccessToken(newUser);
+		const refreshToken = generateRefreshToken(newUser);
+
+		setTokensAsCookies(
+			{
+				accessToken,
+				refreshToken,
+			},
+			res,
+		);
+
+		Responder.success(res, 'User registered successfully', {
+			user: newUser.dataValues,
+			accessToken,
+			refreshToken,
+		});
 	} catch (err) {
 		console.log(err);
 		Responder.error(res, 'An error occurred while registering user', err);
@@ -61,7 +79,22 @@ const loginUser = async (req: Request, res: Response) => {
 			if (strats && strats.password) {
 				const match = await bcrypt.compare(password, strats.password);
 				if (match) {
-					Responder.success(res, 'User logged in successfully', user);
+					const accessToken = generateAccessToken(user);
+					const refreshToken = generateRefreshToken(user);
+
+					setTokensAsCookies(
+						{
+							accessToken,
+							refreshToken,
+						},
+						res,
+					);
+
+					Responder.success(res, 'User logged in successfully', {
+						user: user.dataValues,
+						accessToken,
+						refreshToken,
+					});
 				} else {
 					Responder.error(res, 'Invalid email or password', null, 401);
 				}
@@ -78,12 +111,11 @@ const loginUser = async (req: Request, res: Response) => {
 };
 
 const logoutUser = async (req: Request, res: Response) => {
-	try {
-		Responder.success(res, 'User logged out successfully', null);
-	} catch (err) {
-		console.log(err);
-		Responder.error(res, 'An error occurred while logging out user', err);
-	}
+	// Clear the accessToken and refreshToken cookies
+	res.cookie('accessToken', '', { expires: new Date(0) });
+	res.cookie('refreshToken', '', { expires: new Date(0) });
+
+	Responder.success(res, 'User logged out successfully', null);
 };
 
 export { registerUser, loginUser, logoutUser };

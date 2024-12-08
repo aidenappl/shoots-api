@@ -7,6 +7,7 @@ class User extends Model implements Models.User {
 	email!: string;
 	name!: string;
 	inserted_at!: Date;
+	profile_picture!: string;
 	updated_at?: Date | undefined;
 }
 User.init(
@@ -21,7 +22,7 @@ User.init(
 );
 
 class Authentication extends Model implements Models.Authentication {
-	user_id: number = 0;
+	user_id!: number;
 	password?: string | undefined;
 	google_id?: string | undefined;
 	github_id?: string | undefined;
@@ -76,8 +77,5 @@ ScreenTime.init(
 	},
 	{ sequelize, modelName: 'screen_time', timestamps: false },
 );
-
-User.hasOne(Authentication, { foreignKey: 'user_id' });
-Authentication.belongsTo(User, { foreignKey: 'user_id' });
 
 export { User, Authentication, Group, UserGroup, UserDetails, ScreenTime };

@@ -9,6 +9,7 @@ declare namespace Models {
 	interface User extends Timestamps {
 		id: number;
 		email: string;
+		profile_picture: string;
 		name: string;
 	}
 

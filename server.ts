@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { connectToDatabase } from './db';
 
@@ -12,11 +13,18 @@ dotenv.config();
 if (!process.env.DATABASE_URL) {
 	console.error('Missing DATABASE_URL environment variable.');
 	process.exit(1);
+} else if (!process.env.ACCESS_TOKEN_SECRET) {
+	console.error('Missing ACCESS_TOKEN_SECRET environment variable.');
+	process.exit(1);
+} else if (!process.env.REFRESH_TOKEN_SECRET) {
+	console.error('Missing REFRESH_TOKEN_SECRET environment variable.');
+	process.exit(1);
 }
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // Import routes
 import userRoutes from './routes/user';
