@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Responder from '../middleware/responder';
 import { Group, ScreenTime, User, UserGroup } from '../models/model';
 import sendDynamicEmail from '../utils/sendgrid';
+import { Op } from 'sequelize';
 
 /**
  * List all groups or groups associated with the user
@@ -423,6 +424,7 @@ const getGroupMembers = async (req: Request, res: Response) => {
 			where: {
 				group_id: intID,
 			},
+			attributes: ['user_id'],
 		});
 		if (!userGroups) {
 			return Responder.error(res, 'No members found', null, 404);
@@ -433,6 +435,7 @@ const getGroupMembers = async (req: Request, res: Response) => {
 			where: {
 				id: userIds,
 			},
+			attributes: ['id', 'name', 'email', 'profile_picture', 'inserted_at'],
 		});
 
 		return Responder.success(res, 'Members fetched successfully', members);
@@ -534,6 +537,27 @@ const addScreenTime = async (req: Request, res: Response) => {
 		const { time } = req.body;
 		if (!time) {
 			return Responder.error(res, 'Time is required', null, 422);
+		}
+
+		// check that user hasnt submitted time for last 7 days
+		const lastWeek = new Date();
+		lastWeek.setDate(lastWeek.getDate() - 7);
+		const submittedTime = await ScreenTime.findOne({
+			where: {
+				user_id: user.id,
+				group_id: intID,
+				inserted_at: {
+					[Op.gte]: lastWeek,
+				},
+			},
+		});
+		if (submittedTime) {
+			return Responder.error(
+				res,
+				'You have already submitted time for this group within the last 7 days',
+				null,
+				409,
+			);
 		}
 
 		const screenTime = await ScreenTime.create({

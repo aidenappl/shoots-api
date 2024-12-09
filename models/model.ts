@@ -15,6 +15,7 @@ User.init(
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		email: { type: DataTypes.STRING },
 		name: { type: DataTypes.STRING },
+		profile_picture: { type: DataTypes.STRING },
 		inserted_at: { type: DataTypes.DATE },
 		updated_at: { type: DataTypes.DATE },
 	},
