@@ -15,6 +15,7 @@ User.init(
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		email: { type: DataTypes.STRING },
 		name: { type: DataTypes.STRING },
+		profile_picture: { type: DataTypes.STRING },
 		inserted_at: { type: DataTypes.DATE },
 		updated_at: { type: DataTypes.DATE },
 	},
@@ -71,7 +72,13 @@ UserGroup.init(
 	{ sequelize, modelName: 'user_groups', timestamps: false },
 );
 
-class ScreenTime extends Model {}
+class ScreenTime extends Model implements Models.ScreenTime {
+	id!: number;
+	user_id!: number;
+	group_id!: number;
+	submitted_time!: number;
+	inserted_at!: Date;
+}
 ScreenTime.init(
 	{
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -82,5 +89,17 @@ ScreenTime.init(
 	},
 	{ sequelize, modelName: 'screen_time', timestamps: false },
 );
+
+User.hasOne(Authentication, { foreignKey: 'user_id' });
+Authentication.belongsTo(User, { foreignKey: 'user_id' });
+
+User.belongsToMany(Group, { through: UserGroup, foreignKey: 'user_id' });
+Group.belongsToMany(User, { through: UserGroup, foreignKey: 'group_id' });
+
+User.hasMany(ScreenTime, { foreignKey: 'user_id' });
+ScreenTime.belongsTo(User, { foreignKey: 'user_id' });
+
+Group.hasMany(ScreenTime, { foreignKey: 'group_id' });
+ScreenTime.belongsTo(Group, { foreignKey: 'group_id' });
 
 export { User, Authentication, Group, UserGroup, ScreenTime };

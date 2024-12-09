@@ -5,26 +5,27 @@ dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const sequelize = isProduction
-	? new Sequelize(process.env.DATABASE_URL || '', {
-			dialect: 'postgres',
-			logging: false,
-			dialectOptions: {
-				ssl: {
-					require: true,
-					rejectUnauthorized: false,
+const sequelize =
+	isProduction || process.env.DATABASE_URL
+		? new Sequelize(process.env.DATABASE_URL || '', {
+				dialect: 'postgres',
+				logging: false,
+				dialectOptions: {
+					ssl: {
+						require: true,
+						rejectUnauthorized: false,
+					},
 				},
-			},
-		})
-	: new Sequelize({
-			dialect: 'postgres',
-			host: process.env.POSTGRES_HOST,
-			port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
-			username: process.env.POSTGRES_USER,
-			password: process.env.POSTGRES_PASSWORD,
-			database: process.env.POSTGRES_DB,
-			logging: false,
-		});
+			})
+		: new Sequelize({
+				dialect: 'postgres',
+				host: process.env.POSTGRES_HOST,
+				port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+				username: process.env.POSTGRES_USER,
+				password: process.env.POSTGRES_PASSWORD,
+				database: process.env.POSTGRES_DB,
+				logging: false,
+			});
 
 const connectToDatabase = async (): Promise<void> => {
 	try {
