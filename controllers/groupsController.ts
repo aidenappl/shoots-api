@@ -572,6 +572,28 @@ const addScreenTime = async (req: Request, res: Response) => {
 	}
 };
 
+/**
+ * Get weekly rankings
+ * @param req Express request
+ * @param res Express response
+ * @returns void
+ * @route /groups/:id/rankings
+ * @method GET
+ * @example
+ * /groups/1/rankings
+ * @description
+ * This controller is used to get weekly rankings
+ * Steps:
+ * 1. It checks if the id is an integer
+ * 2. It checks if the group exists
+ * 3. It fetches the screen times for the group
+ * 4. It calculates the weekly rankings
+ * 5. It sends a success response with the rankings
+ * 6. If an error occurs, it sends an error response
+ * @note
+ * This controller uses the getLastMonday function from the getMonday.ts file
+ * The getLastMonday function is used to get the date of the last Monday
+ */
 const getWeeklyRankings = async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
@@ -641,7 +663,25 @@ const getWeeklyRankings = async (req: Request, res: Response) => {
 	}
 };
 
-// get each week's rankings, return an array of objects with the week's rankings
+/**
+ * Get historical rankings
+ * @param req Express request
+ * @param res Express response
+ * @returns void
+ * @route /groups/:id/historical
+ * @method GET
+ * @example
+ * /groups/1/historical
+ * @description
+ * This controller is used to get historical rankings
+ * Steps:
+ * 1. It checks if the id is an integer
+ * 2. It checks if the group exists
+ * 3. It fetches the screen times for the group
+ * 4. It calculates the weekly rankings
+ * 5. It sends a success response with the rankings
+ * 6. If an error occurs, it sends an error response
+ */
 const getHistoricalRankings = async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
