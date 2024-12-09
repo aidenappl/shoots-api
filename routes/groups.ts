@@ -1,35 +1,31 @@
-import express, { Request, Response } from 'express';
-import Responder from '../middleware/responder';
+import express from 'express';
+import {
+	createGroup,
+	createInvite,
+	deleteGroup,
+	getGroup,
+	joinGroup,
+	listGroups,
+} from '../controllers/groupsController';
+import { authenticate } from '../middleware/authMiddleware';
 const router = express.Router();
 
-// [GET] associated groups
-router.get('/', async (req: Request, res: Response) => {
-	try {
-		Responder.success(res, 'Groups fetched successfully', null);
-	} catch (err) {
-		console.log(err);
-		Responder.error(res, 'An error occurred while fetching groups', err);
-	}
-});
+// [GET] all/associated groups
+router.get('/', authenticate, listGroups);
 
 // [GET] specific group
-router.get('/:id', (req: Request, res: Response) => {
-	Responder.success(res, 'Group fetched successfully', req.params.id);
-});
+router.get('/:id', authenticate, getGroup);
 
 // [POST] create group
-router.post('/', async (req: Request, res: Response) => {
-	Responder.success(res, 'Group created successfully', req.body);
-});
+router.post('/', authenticate, createGroup);
 
 // [PUT] handle user invite to group
-router.put('/:id/invite', (req: Request, res: Response) => {
-	Responder.success(res, 'User invited to group successfully', req.body);
-});
+router.put('/:group_id/invite', authenticate, createInvite);
+
+// [PUT] handle user joining group
+router.put('/join', authenticate, joinGroup);
 
 // [DELETE] deletes group
-router.delete('/:id', (req: Request, res: Response) => {
-	Responder.success(res, 'Group deleted successfully', req.params.id);
-});
+router.delete('/:id', authenticate, deleteGroup);
 
 export default router;
