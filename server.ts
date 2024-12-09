@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Environment Checks
-if (!process.env.DATABASE_URL) {
+if (!process.env.DATABASE_URL && process.env.NODE_ENV == 'production') {
 	console.error('Missing DATABASE_URL environment variable.');
 	process.exit(1);
 } else if (!process.env.ACCESS_TOKEN_SECRET) {
