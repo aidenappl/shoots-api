@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Responder from '../middleware/responder';
 import { Group, ScreenTime, User, UserGroup } from '../models/model';
+import sendDynamicEmail from '../utils/sendgrid';
 
 /**
  * List all groups or groups associated with the user
@@ -200,12 +201,19 @@ const createInvite = async (req: Request, res: Response) => {
 			return Responder.error(res, 'User ID must be an integer', null, 422);
 		}
 
-		// check if user exists
+		// check if invitee exists
 		const user = await User.findByPk(userIntID);
 		if (!user) {
 			return Responder.error(res, 'User not found', null, 404);
 		}
 
+		// get the inviter
+		const inviter = await User.findByPk(res.locals.user.id);
+		if (!inviter) {
+			return Responder.error(res, 'Inviter not found', null, 404);
+		}
+
+		// check if group exists
 		const group = await Group.findByPk(intID);
 		if (!group) {
 			return Responder.error(res, 'Group not found', null, 404);
@@ -240,6 +248,15 @@ const createInvite = async (req: Request, res: Response) => {
 		});
 
 		// send email to user
+		sendDynamicEmail({
+			email: user.email,
+			subject: 'New Invitation - Shoots',
+			title: 'New Invitation',
+			body: `Hi ${user.name},\n\nYou've been invited to join: <b>${group.name}</b> by <i>${inviter.name}</i>. If you'd like to join this group click the join group button below!`,
+			action_button_url: 'https://shoots.aplb.xyz/groups/join?code=' + group.code,
+			action_button_text: 'View Invitation',
+		});
+
 		return Responder.success(res, 'Invite sent successfully', null);
 	} catch (err) {
 		console.log(err);

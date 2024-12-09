@@ -19,6 +19,9 @@ if (!process.env.DATABASE_URL) {
 } else if (!process.env.REFRESH_TOKEN_SECRET) {
 	console.error('Missing REFRESH_TOKEN_SECRET environment variable.');
 	process.exit(1);
+} else if (!process.env.SENDGRID_API_KEY) {
+	console.error('Missing SENDGRID_API_KEY environment variable.');
+	process.exit(1);
 }
 
 // Middleware
