@@ -72,7 +72,13 @@ UserGroup.init(
 	{ sequelize, modelName: 'user_groups', timestamps: false },
 );
 
-class ScreenTime extends Model {}
+class ScreenTime extends Model implements Models.ScreenTime {
+	id!: number;
+	user_id!: number;
+	group_id!: number;
+	submitted_time!: number;
+	inserted_at!: Date;
+}
 ScreenTime.init(
 	{
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },

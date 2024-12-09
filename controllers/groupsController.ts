@@ -3,6 +3,7 @@ import Responder from '../middleware/responder';
 import { Group, ScreenTime, User, UserGroup } from '../models/model';
 import sendDynamicEmail from '../utils/sendgrid';
 import { Op } from 'sequelize';
+import { getLastMonday } from '../utils/getMonday';
 
 /**
  * List all groups or groups associated with the user
@@ -539,22 +540,20 @@ const addScreenTime = async (req: Request, res: Response) => {
 			return Responder.error(res, 'Time is required', null, 422);
 		}
 
-		// check that user hasnt submitted time for last 7 days
-		const lastWeek = new Date();
-		lastWeek.setDate(lastWeek.getDate() - 7);
+		// check that user hasn't submitted time for last 7 days
 		const submittedTime = await ScreenTime.findOne({
 			where: {
 				user_id: user.id,
 				group_id: intID,
 				inserted_at: {
-					[Op.gte]: lastWeek,
+					[Op.gte]: getLastMonday(),
 				},
 			},
 		});
 		if (submittedTime) {
 			return Responder.error(
 				res,
-				'You have already submitted time for this group within the last 7 days',
+				'You have already submitted time for this group within this week',
 				null,
 				409,
 			);
@@ -573,6 +572,154 @@ const addScreenTime = async (req: Request, res: Response) => {
 	}
 };
 
+const getWeeklyRankings = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const intID = parseInt(id);
+		if (isNaN(intID)) {
+			return Responder.error(res, 'Group ID must be an integer', null, 422);
+		}
+
+		const group = await Group.findByPk(intID);
+		if (!group) {
+			return Responder.error(res, 'Group not found', null, 404);
+		}
+
+		const screenTimes = await ScreenTime.findAll({
+			where: {
+				group_id: intID,
+				inserted_at: {
+					[Op.gte]: getLastMonday(),
+				},
+			},
+			attributes: ['user_id', 'submitted_time'],
+		});
+		if (!screenTimes) {
+			return Responder.error(res, 'No screen times found', null, 404);
+		}
+
+		const userTimes: { [key: number]: number } = {};
+		screenTimes.forEach(screenTime => {
+			if (userTimes[screenTime.user_id]) {
+				userTimes[screenTime.user_id] += screenTime.submitted_time;
+			} else {
+				userTimes[screenTime.user_id] = screenTime.submitted_time;
+			}
+		});
+
+		// get all users in the group
+		const userGroups = await UserGroup.findAll({
+			where: {
+				group_id: intID,
+			},
+			attributes: ['user_id'],
+		});
+
+		const userIds = userGroups.map(userGroup => userGroup.user_id);
+
+		// get all users
+		const users = await User.findAll({
+			where: {
+				id: userIds,
+			},
+			attributes: ['id', 'name', 'email', 'profile_picture'],
+		});
+
+		const sortedTimes = Object.entries(userTimes).sort((a, b) => b[1] - a[1]);
+		const rankings = sortedTimes.map(([userId, time], index) => {
+			return {
+				rank: index + 1,
+				user: users.find(user => user.id === parseInt(userId)),
+				time,
+			};
+		});
+
+		return Responder.success(res, 'this weeks rankings fetched successfully', rankings);
+	} catch (err) {
+		console.log(err);
+		Responder.error(res, 'An error occurred while fetching weekly rankings', err);
+	}
+};
+
+// get each week's rankings, return an array of objects with the week's rankings
+const getHistoricalRankings = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const intID = parseInt(id);
+		if (isNaN(intID)) {
+			return Responder.error(res, 'Group ID must be an integer', null, 422);
+		}
+
+		const group = await Group.findByPk(intID);
+		if (!group) {
+			return Responder.error(res, 'Group not found', null, 404);
+		}
+
+		const screenTimes = await ScreenTime.findAll({
+			where: {
+				group_id: intID,
+			},
+			attributes: ['user_id', 'submitted_time', 'inserted_at'],
+		});
+		if (!screenTimes) {
+			return Responder.error(res, 'No screen times found', null, 404);
+		}
+
+		const userTimes: { [key: number]: { [key: string]: number } } = {};
+		screenTimes.forEach(screenTime => {
+			const week = getLastMonday(screenTime.inserted_at);
+			const weekStr = week.toISOString();
+			if (userTimes[screenTime.user_id]) {
+				if (userTimes[screenTime.user_id][weekStr]) {
+					userTimes[screenTime.user_id][weekStr] += screenTime.submitted_time;
+				} else {
+					userTimes[screenTime.user_id][weekStr] = screenTime.submitted_time;
+				}
+			} else {
+				userTimes[screenTime.user_id] = { [weekStr]: screenTime.submitted_time };
+			}
+		});
+
+		// get all users in the group
+		const userGroups = await UserGroup.findAll({
+			where: {
+				group_id: intID,
+			},
+			attributes: ['user_id'],
+		});
+
+		const userIds = userGroups.map(userGroup => userGroup.user_id);
+
+		// get all users
+		const users = await User.findAll({
+			where: {
+				id: userIds,
+			},
+			attributes: ['id', 'name', 'email', 'profile_picture'],
+		});
+
+		const rankings = Object.entries(userTimes).map(([userId, weeks]) => {
+			const user = users.find(user => user.id === parseInt(userId));
+			const weekRankings = Object.entries(weeks).sort((a, b) => b[1] - a[1]);
+			return {
+				user,
+				weekRankings: weekRankings.map(([week, time], index) => {
+					return {
+						rank: index + 1,
+						week,
+						time,
+					};
+				}),
+			};
+		});
+
+		return Responder.success(res, 'historical rankings fetched successfully', rankings);
+	} catch (err) {
+		console.log(err);
+		Responder.error(res, 'An error occurred while fetching historical rankings', err);
+	}
+};
+
 export {
 	listGroups,
 	getGroup,
@@ -580,7 +727,9 @@ export {
 	createInvite,
 	joinGroup,
 	deleteGroup,
+	getWeeklyRankings,
 	getGroupMembers,
 	getGroupScreenTime,
 	addScreenTime,
+	getHistoricalRankings,
 };

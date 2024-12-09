@@ -7,6 +7,8 @@ import {
 	getGroup,
 	getGroupMembers,
 	getGroupScreenTime,
+	getHistoricalRankings,
+	getWeeklyRankings,
 	joinGroup,
 	listGroups,
 } from '../controllers/groupsController';
@@ -27,6 +29,12 @@ router.get('/:id/time', authenticate, getGroupScreenTime);
 
 // [POST] add screen time to group
 router.post('/:id/time', authenticate, addScreenTime);
+
+// [GET] weekly rankings
+router.get('/:id/rankings', authenticate, getWeeklyRankings);
+
+// [GET] historical rankings
+router.get('/:id/historical', authenticate, getHistoricalRankings);
 
 // [POST] create group
 router.post('/', authenticate, createGroup);
