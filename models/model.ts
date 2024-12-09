@@ -83,4 +83,16 @@ ScreenTime.init(
 	{ sequelize, modelName: 'screen_time', timestamps: false },
 );
 
+User.hasOne(Authentication, { foreignKey: 'user_id' });
+Authentication.belongsTo(User, { foreignKey: 'user_id' });
+
+User.belongsToMany(Group, { through: UserGroup, foreignKey: 'user_id' });
+Group.belongsToMany(User, { through: UserGroup, foreignKey: 'group_id' });
+
+User.hasMany(ScreenTime, { foreignKey: 'user_id' });
+ScreenTime.belongsTo(User, { foreignKey: 'user_id' });
+
+Group.hasMany(ScreenTime, { foreignKey: 'group_id' });
+ScreenTime.belongsTo(Group, { foreignKey: 'group_id' });
+
 export { User, Authentication, Group, UserGroup, ScreenTime };

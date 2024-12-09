@@ -388,4 +388,175 @@ const deleteGroup = async (req: Request, res: Response) => {
 	}
 };
 
-export { listGroups, getGroup, createGroup, createInvite, joinGroup, deleteGroup };
+/**
+ * Get group members
+ * @param req Express request
+ * @param res Express response
+ * @returns void
+ * @route /groups/:id/members
+ * @method GET
+ * @example
+ * /groups/1/members
+ * @description
+ * This controller is used to get group members
+ * Steps:
+ * 1. It checks if the id is an integer
+ * 2. It checks if the group exists
+ * 3. It fetches the group members
+ * 4. It sends a success response with the members
+ * 5. If an error occurs, it sends an error response
+ */
+const getGroupMembers = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const intID = parseInt(id);
+		if (isNaN(intID)) {
+			return Responder.error(res, 'Group ID must be an integer', null, 422);
+		}
+
+		const group = await Group.findByPk(intID);
+		if (!group) {
+			return Responder.error(res, 'Group not found', null, 404);
+		}
+
+		const userGroups = await UserGroup.findAll({
+			where: {
+				group_id: intID,
+			},
+		});
+		if (!userGroups) {
+			return Responder.error(res, 'No members found', null, 404);
+		}
+
+		const userIds = userGroups.map(userGroup => userGroup.user_id);
+		const members = await User.findAll({
+			where: {
+				id: userIds,
+			},
+		});
+
+		return Responder.success(res, 'Members fetched successfully', members);
+	} catch (err) {
+		console.log(err);
+		Responder.error(res, 'An error occurred while fetching members', err);
+	}
+};
+
+/**
+ * Get group screen time
+ * @param req Express request
+ * @param res Express response
+ * @returns void
+ *
+ * @route /groups/:id/time
+ * @method GET
+ * @example
+ * /groups/1/time
+ * @description
+ * This controller is used to get group screen time
+ * Steps:
+ * 1. It checks if the id is an integer
+ * 2. It checks if the group exists
+ * 3. It fetches the screen times for the group
+ * 4. It sends a success response with the screen times
+ * 5. If an error occurs, it sends an error response
+ */
+const getGroupScreenTime = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const intID = parseInt(id);
+		if (isNaN(intID)) {
+			return Responder.error(res, 'Group ID must be an integer', null, 422);
+		}
+
+		const group = await Group.findByPk(intID);
+		if (!group) {
+			return Responder.error(res, 'Group not found', null, 404);
+		}
+
+		const screenTimes = await ScreenTime.findAll({
+			where: {
+				group_id: intID,
+			},
+			attributes: ['id', 'submitted_time', 'inserted_at'],
+			include: {
+				model: User,
+				attributes: ['name'],
+			},
+		});
+		if (!screenTimes) {
+			return Responder.error(res, 'No screen times found', null, 404);
+		}
+
+		return Responder.success(res, 'Screen times fetched successfully', screenTimes);
+	} catch (err) {
+		console.log(err);
+		Responder.error(res, 'An error occurred while fetching screen times', err);
+	}
+};
+
+/**
+ * Add screen time to a group
+ * @param req Express request
+ * @param res Express response
+ * @returns void
+ * @route /groups/:id/time
+ * @method POST
+ * @example
+ * /groups/1/time
+ * {
+ *   "time": 10.20 (IN HOURS)
+ * }
+ * @description
+ * This controller is used to add screen time to a group
+ * Steps:
+ * 1. It checks if the id is an integer
+ * 2. It checks if the group exists
+ * 3. It checks if time is provided
+ * 4. It creates the screen time
+ * 5. It sends a success response
+ * 6. If an error occurs, it sends an error response
+ */
+const addScreenTime = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const intID = parseInt(id);
+		if (isNaN(intID)) {
+			return Responder.error(res, 'Group ID must be an integer', null, 422);
+		}
+
+		const group = await Group.findByPk(intID);
+		if (!group) {
+			return Responder.error(res, 'Group not found', null, 404);
+		}
+
+		const { user } = res.locals;
+		const { time } = req.body;
+		if (!time) {
+			return Responder.error(res, 'Time is required', null, 422);
+		}
+
+		const screenTime = await ScreenTime.create({
+			user_id: user.id,
+			group_id: intID,
+			submitted_time: time,
+		});
+
+		return Responder.success(res, 'Screen time added successfully', screenTime);
+	} catch (err) {
+		console.log(err);
+		Responder.error(res, 'An error occurred while adding screen time', err);
+	}
+};
+
+export {
+	listGroups,
+	getGroup,
+	createGroup,
+	createInvite,
+	joinGroup,
+	deleteGroup,
+	getGroupMembers,
+	getGroupScreenTime,
+	addScreenTime,
+};
