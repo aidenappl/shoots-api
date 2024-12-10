@@ -58,5 +58,4 @@ create table screen_times
             references users,
     submitted_time double precision,
     inserted_at    timestamp default now(),
-    group_id       integer not null
 );

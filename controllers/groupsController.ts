@@ -478,9 +478,22 @@ const getGroupScreenTime = async (req: Request, res: Response) => {
 			return Responder.error(res, 'Group not found', null, 404);
 		}
 
-		const screenTimes = await ScreenTime.findAll({
+		// fet users from group
+		const users = await UserGroup.findAll({
 			where: {
 				group_id: intID,
+			},
+			attributes: ['user_id'],
+		});
+		if (!users) {
+			return Responder.error(res, 'No users found', null, 404);
+		}
+
+		const userIds = users.map(user => user.user_id);
+
+		const screenTimes = await ScreenTime.findAll({
+			where: {
+				user_id: userIds,
 			},
 			attributes: ['id', 'submitted_time', 'inserted_at'],
 			include: {
@@ -607,9 +620,27 @@ const getWeeklyRankings = async (req: Request, res: Response) => {
 			return Responder.error(res, 'Group not found', null, 404);
 		}
 
-		const screenTimes = await ScreenTime.findAll({
+		// get all users in the group
+		const userGroups = await UserGroup.findAll({
 			where: {
 				group_id: intID,
+			},
+			attributes: ['user_id'],
+		});
+
+		const userIds = userGroups.map(userGroup => userGroup.user_id);
+
+		// get all users
+		const users = await User.findAll({
+			where: {
+				id: userIds,
+			},
+			attributes: ['id', 'name', 'email', 'profile_picture'],
+		});
+
+		const screenTimes = await ScreenTime.findAll({
+			where: {
+				user_id: userIds,
 				inserted_at: {
 					[Op.gte]: getLastMonday(),
 				},
@@ -627,24 +658,6 @@ const getWeeklyRankings = async (req: Request, res: Response) => {
 			} else {
 				userTimes[screenTime.user_id] = screenTime.submitted_time;
 			}
-		});
-
-		// get all users in the group
-		const userGroups = await UserGroup.findAll({
-			where: {
-				group_id: intID,
-			},
-			attributes: ['user_id'],
-		});
-
-		const userIds = userGroups.map(userGroup => userGroup.user_id);
-
-		// get all users
-		const users = await User.findAll({
-			where: {
-				id: userIds,
-			},
-			attributes: ['id', 'name', 'email', 'profile_picture'],
 		});
 
 		const sortedTimes = Object.entries(userTimes).sort((a, b) => b[1] - a[1]);
@@ -695,9 +708,19 @@ const getHistoricalRankings = async (req: Request, res: Response) => {
 			return Responder.error(res, 'Group not found', null, 404);
 		}
 
-		const screenTimes = await ScreenTime.findAll({
+		// get all users in the group
+		const userGroups = await UserGroup.findAll({
 			where: {
 				group_id: intID,
+			},
+			attributes: ['user_id'],
+		});
+
+		const userIds = userGroups.map(userGroup => userGroup.user_id);
+
+		const screenTimes = await ScreenTime.findAll({
+			where: {
+				user_id: userIds,
 			},
 			attributes: ['user_id', 'submitted_time', 'inserted_at'],
 		});
@@ -719,16 +742,6 @@ const getHistoricalRankings = async (req: Request, res: Response) => {
 				userTimes[screenTime.user_id] = { [weekStr]: screenTime.submitted_time };
 			}
 		});
-
-		// get all users in the group
-		const userGroups = await UserGroup.findAll({
-			where: {
-				group_id: intID,
-			},
-			attributes: ['user_id'],
-		});
-
-		const userIds = userGroups.map(userGroup => userGroup.user_id);
 
 		// get all users
 		const users = await User.findAll({
