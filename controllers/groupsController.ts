@@ -33,11 +33,11 @@ const listGroups = async (req: Request, res: Response) => {
 				},
 			});
 			if (!assocGroups) {
-				return Responder.error(res, 'No associated groups found', null, 404);
+				return Responder.success(res, 'User is not in any groups yet', []);
 			}
 			const groupIds = assocGroups.map(group => group.group_id);
 			if (groupIds.length === 0) {
-				return Responder.error(res, 'No associated groups found', null, 404);
+				return Responder.success(res, 'User is not in any groups yet', []);
 			}
 			const groups = await Group.findAll({
 				where: {
