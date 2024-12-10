@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import Responder from '../middleware/responder';
 import { ScreenTime } from '../models/model';
+import { Op } from 'sequelize';
+import { getLastMonday } from '../utils/getMonday';
 
 const enterScreenTime = async (req: Request, res: Response) => {
 	try {
@@ -29,7 +31,14 @@ const enterScreenTime = async (req: Request, res: Response) => {
 const getSelfScreenTime = async (req: Request, res: Response) => {
 	try {
 		const { user } = res.locals;
-		const screenTime = await ScreenTime.findByPk(user.id);
+		const screenTime = await ScreenTime.findOne({
+			where: {
+				user_id: user.id,
+				inserted_at: {
+					[Op.gte]: getLastMonday(),
+				},
+			},
+		});
 		if (!screenTime) {
 			return Responder.error(res, 'No screen time found for user', null, 404);
 		}
