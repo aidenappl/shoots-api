@@ -374,13 +374,6 @@ const deleteGroup = async (req: Request, res: Response) => {
 			},
 		});
 
-		// delete the associated screen times
-		await ScreenTime.destroy({
-			where: {
-				group_id: intID,
-			},
-		});
-
 		await group.destroy();
 
 		return Responder.success(res, 'Group deleted successfully', null);
