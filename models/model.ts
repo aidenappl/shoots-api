@@ -83,7 +83,6 @@ ScreenTime.init(
 	{
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		user_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
-		group_id: { type: DataTypes.INTEGER, references: { model: Group, key: 'id' } },
 		submitted_time: { type: DataTypes.INTEGER },
 		inserted_at: { type: DataTypes.DATE },
 	},
@@ -98,8 +97,5 @@ Group.belongsToMany(User, { through: UserGroup, foreignKey: 'group_id' });
 
 User.hasMany(ScreenTime, { foreignKey: 'user_id' });
 ScreenTime.belongsTo(User, { foreignKey: 'user_id' });
-
-Group.hasMany(ScreenTime, { foreignKey: 'group_id' });
-ScreenTime.belongsTo(Group, { foreignKey: 'group_id' });
 
 export { User, Authentication, Group, UserGroup, ScreenTime };

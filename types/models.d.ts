@@ -40,7 +40,6 @@ declare namespace Models {
 	interface ScreenTime extends Timestamps {
 		id: number;
 		user_id: number;
-		group_id: number;
 		submitted_time: number;
 	}
 }
