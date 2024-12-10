@@ -556,12 +556,7 @@ const enterScreenTime = async (req: Request, res: Response) => {
 			},
 		});
 		if (submittedTime) {
-			return Responder.error(
-				res,
-				'You have already submitted time for this week',
-				null,
-				409,
-			);
+			return Responder.error(res, 'You have already submitted time for this week', null, 409);
 		}
 
 		const screenTime = await ScreenTime.create({
