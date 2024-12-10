@@ -541,6 +541,10 @@ const enterScreenTime = async (req: Request, res: Response) => {
 		if (!time) {
 			return Responder.error(res, 'Time is required', null, 422);
 		}
+		const screenTimeAmount = parseInt(time);
+		if (isNaN(screenTimeAmount)) {
+			return Responder.error(res, 'Group ID must be an integer', null, 422);
+		}
 
 		// check that user hasn't submitted time for last 7 days
 		const submittedTime = await ScreenTime.findOne({
@@ -554,7 +558,7 @@ const enterScreenTime = async (req: Request, res: Response) => {
 		if (submittedTime) {
 			return Responder.error(
 				res,
-				'You have already submitted time for this group within this week',
+				'You have already submitted time for this week',
 				null,
 				409,
 			);
@@ -562,7 +566,7 @@ const enterScreenTime = async (req: Request, res: Response) => {
 
 		const screenTime = await ScreenTime.create({
 			user_id: user.id,
-			submitted_time: time,
+			submitted_time: screenTimeAmount,
 		});
 
 		return Responder.success(res, 'Screen time added successfully', screenTime);
