@@ -609,7 +609,7 @@ const getWeeklyRankings = async (req: Request, res: Response) => {
 		// get all users in the group
 		const userGroups = await UserGroup.findAll({
 			where: {
-				group_id: intID,
+				group_id: group.id,
 			},
 			attributes: ['user_id'],
 		});
@@ -646,7 +646,7 @@ const getWeeklyRankings = async (req: Request, res: Response) => {
 			}
 		});
 
-		const sortedTimes = Object.entries(userTimes).sort((a, b) => b[1] - a[1]);
+		const sortedTimes = Object.entries(userTimes).sort((a, b) => a[1] - b[1]);
 		const rankings = sortedTimes.map(([userId, time], index) => {
 			return {
 				rank: index + 1,
@@ -739,7 +739,7 @@ const getHistoricalRankings = async (req: Request, res: Response) => {
 
 		const rankings = Object.entries(userTimes).map(([userId, weeks]) => {
 			const user = users.find(user => user.id === parseInt(userId));
-			const weekRankings = Object.entries(weeks).sort((a, b) => b[1] - a[1]);
+			const weekRankings = Object.entries(weeks).sort((a, b) => a[1] - b[1]);
 			return {
 				user,
 				weekRankings: weekRankings.map(([week, time], index) => {
