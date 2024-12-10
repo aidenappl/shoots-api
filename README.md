@@ -2,6 +2,8 @@
 
 Shoots API is a Node.js and Express-based backend application designed to provide an API with PostgreSQL integration. This guide outlines the steps to set up and run the project.
 
+UI Companion: [https://github.com/cdugo/shoots-ui/](https://github.com/cdugo/shoots-ui/)
+
 ---
 
 ## **Getting Started**
