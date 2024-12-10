@@ -543,7 +543,7 @@ const enterScreenTime = async (req: Request, res: Response) => {
 		}
 		const screenTimeAmount = parseInt(time);
 		if (isNaN(screenTimeAmount)) {
-			return Responder.error(res, 'Group ID must be an integer', null, 422);
+			return Responder.error(res, 'Screen time must be an integer', null, 422);
 		}
 
 		// check that user hasn't submitted time for last 7 days
