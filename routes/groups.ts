@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-	addScreenTime,
+	enterScreenTime,
 	createGroup,
 	createInvite,
 	deleteGroup,
@@ -28,7 +28,7 @@ router.get('/:id/members', authenticate, getGroupMembers);
 router.get('/:id/time', authenticate, getGroupScreenTime);
 
 // [POST] add screen time to group
-router.post('/:id/time', authenticate, addScreenTime);
+router.post('/:id/time', authenticate, enterScreenTime);
 
 // [GET] weekly rankings
 router.get('/:id/rankings', authenticate, getWeeklyRankings);

@@ -534,19 +534,8 @@ const getGroupScreenTime = async (req: Request, res: Response) => {
  * 5. It sends a success response
  * 6. If an error occurs, it sends an error response
  */
-const addScreenTime = async (req: Request, res: Response) => {
+const enterScreenTime = async (req: Request, res: Response) => {
 	try {
-		const { id } = req.params;
-		const intID = parseInt(id);
-		if (isNaN(intID)) {
-			return Responder.error(res, 'Group ID must be an integer', null, 422);
-		}
-
-		const group = await Group.findByPk(intID);
-		if (!group) {
-			return Responder.error(res, 'Group not found', null, 404);
-		}
-
 		const { user } = res.locals;
 		const { time } = req.body;
 		if (!time) {
@@ -557,7 +546,6 @@ const addScreenTime = async (req: Request, res: Response) => {
 		const submittedTime = await ScreenTime.findOne({
 			where: {
 				user_id: user.id,
-				group_id: intID,
 				inserted_at: {
 					[Op.gte]: getLastMonday(),
 				},
@@ -574,7 +562,6 @@ const addScreenTime = async (req: Request, res: Response) => {
 
 		const screenTime = await ScreenTime.create({
 			user_id: user.id,
-			group_id: intID,
 			submitted_time: time,
 		});
 
@@ -783,6 +770,6 @@ export {
 	getWeeklyRankings,
 	getGroupMembers,
 	getGroupScreenTime,
-	addScreenTime,
+	enterScreenTime,
 	getHistoricalRankings,
 };
