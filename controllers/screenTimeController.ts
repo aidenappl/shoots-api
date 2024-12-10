@@ -9,10 +9,14 @@ const enterScreenTime = async (req: Request, res: Response) => {
 		if (!screen_time) {
 			return Responder.error(res, 'Must provide screen time value', null, 400);
 		}
+    const screenTimeAmount = parseInt(screen_time);
+		if (isNaN(screenTimeAmount)) {
+			return Responder.error(res, 'Screen time must be an integer', null, 422);
+		}
 
 		const screenTime = await ScreenTime.create({
 			user_id: user.id,
-			submitted_time: screen_time,
+			submitted_time: screenTimeAmount,
 		});
 
 		return Responder.success(res, 'Screen time submitted successfully', screenTime);
