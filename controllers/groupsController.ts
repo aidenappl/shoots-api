@@ -534,48 +534,34 @@ const getGroupScreenTime = async (req: Request, res: Response) => {
  * 5. It sends a success response
  * 6. If an error occurs, it sends an error response
  */
-const addScreenTime = async (req: Request, res: Response) => {
+const enterScreenTime = async (req: Request, res: Response) => {
 	try {
-		const { id } = req.params;
-		const intID = parseInt(id);
-		if (isNaN(intID)) {
-			return Responder.error(res, 'Group ID must be an integer', null, 422);
-		}
-
-		const group = await Group.findByPk(intID);
-		if (!group) {
-			return Responder.error(res, 'Group not found', null, 404);
-		}
-
 		const { user } = res.locals;
 		const { time } = req.body;
 		if (!time) {
 			return Responder.error(res, 'Time is required', null, 422);
+		}
+		const screenTimeAmount = parseInt(time);
+		if (isNaN(screenTimeAmount)) {
+			return Responder.error(res, 'Screen time must be an integer', null, 422);
 		}
 
 		// check that user hasn't submitted time for last 7 days
 		const submittedTime = await ScreenTime.findOne({
 			where: {
 				user_id: user.id,
-				group_id: intID,
 				inserted_at: {
 					[Op.gte]: getLastMonday(),
 				},
 			},
 		});
 		if (submittedTime) {
-			return Responder.error(
-				res,
-				'You have already submitted time for this group within this week',
-				null,
-				409,
-			);
+			return Responder.error(res, 'You have already submitted time for this week', null, 409);
 		}
 
 		const screenTime = await ScreenTime.create({
 			user_id: user.id,
-			group_id: intID,
-			submitted_time: time,
+			submitted_time: screenTimeAmount,
 		});
 
 		return Responder.success(res, 'Screen time added successfully', screenTime);
@@ -783,6 +769,6 @@ export {
 	getWeeklyRankings,
 	getGroupMembers,
 	getGroupScreenTime,
-	addScreenTime,
+	enterScreenTime,
 	getHistoricalRankings,
 };
