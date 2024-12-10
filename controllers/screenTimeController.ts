@@ -26,4 +26,18 @@ const enterScreenTime = async (req: Request, res: Response) => {
 	}
 };
 
-export { enterScreenTime };
+const getSelfScreenTime = async (req: Request, res: Response) => {
+	try {
+		const { user } = res.locals;
+		const screenTime = await ScreenTime.findByPk(user.id);
+		if (!screenTime) {
+			return Responder.error(res, 'No screen time found for user', null, 404);
+		}
+		return Responder.success(res, 'Screen time fetched successfully', screenTime);
+	} catch (err) {
+		console.log(err);
+		Responder.error(res, 'An error occurred while fetching screen time', err);
+	}
+};
+
+export { enterScreenTime, getSelfScreenTime };
