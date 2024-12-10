@@ -56,6 +56,6 @@ create table screen_times
     user_id        integer
         constraint screen_time_user_id_fkey
             references users,
-    submitted_time double precision,
-    inserted_at    timestamp default now(),
+    submitted_time integer,
+    inserted_at    timestamp default now()
 );

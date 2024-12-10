@@ -40,7 +40,7 @@ const getSelfScreenTime = async (req: Request, res: Response) => {
 			},
 		});
 		if (!screenTime) {
-			return Responder.error(res, 'No screen time found for user', null, 404);
+			return Responder.success(res, "User has not entered this week's screen time yet", null);
 		}
 		return Responder.success(res, 'Screen time fetched successfully', screenTime);
 	} catch (err) {

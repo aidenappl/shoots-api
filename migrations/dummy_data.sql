@@ -147,168 +147,168 @@ WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
 ------------------------------------------------------------
 
 -- Fitness Group: Alice, Bob, Cathrine, Derek
--- Alice: 45.5, 46.0, 44.0, 47.5
+-- Alice: 180, 200, 195, 210
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 45.5, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
+SELECT u.id, 180, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 46.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
+SELECT u.id, 200, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 44.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
+SELECT u.id, 195, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 47.5, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
+SELECT u.id, 210, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='alice@example.com' AND g.name='Fitness Group';
 
--- Bob: 30.0, 32.0, 29.5, 31.0
+-- Bob: 240, 220, 230, 250
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 30.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
+SELECT u.id, 240, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 32.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
+SELECT u.id, 220, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 29.5, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
+SELECT u.id, 230, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 31.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
+SELECT u.id, 250, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='bob@example.com' AND g.name='Fitness Group';
 
--- Cathrine: 90.0, 85.0, 88.0, 92.0
+-- Cathrine: 320, 310, 330, 340
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 90.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
+SELECT u.id, 320, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 85.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
+SELECT u.id, 310, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 88.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
+SELECT u.id, 330, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 92.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
+SELECT u.id, 340, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='cathrine@example.com' AND g.name='Fitness Group';
 
--- Derek: 15.0, 14.5, 16.0, 15.5
+-- Derek: 150, 160, 155, 170
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 15.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
+SELECT u.id, 150, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 14.5, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
+SELECT u.id, 160, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 16.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
+SELECT u.id, 155, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 15.5, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
+SELECT u.id, 170, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='derek@example.com' AND g.name='Fitness Group';
 
 ------------------------------------------------------------
 -- Hacker Club (Eve, Frank, Gina, Harry)
--- Eve: 999.9, 990.0, 1002.0, 995.5
+-- Eve: 320, 310, 330, 315
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 999.9, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
+SELECT u.id, 320, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 990.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
+SELECT u.id, 310, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 1002.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
+SELECT u.id, 330, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 995.5, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
+SELECT u.id, 315, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='eve@example.com' AND g.name='Hacker Club';
 
--- Frank: 200.0, 205.0, 199.0, 210.0
+-- Frank: 200, 205, 195, 210
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 200.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
+SELECT u.id, 200, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 205.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
+SELECT u.id, 205, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 199.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
+SELECT u.id, 195, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 210.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
+SELECT u.id, 210, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='frank@example.com' AND g.name='Hacker Club';
 
--- Gina: 75.0, 70.0, 80.0, 77.5
+-- Gina: 240, 230, 250, 245
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 75.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
+SELECT u.id, 240, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 70.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
+SELECT u.id, 230, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 80.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
+SELECT u.id, 250, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 77.5, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
+SELECT u.id, 245, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='gina@example.com' AND g.name='Hacker Club';
 
--- Harry: 0.0, 5.0, 2.5, 10.0
+-- Harry: 150, 145, 160, 155
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 0.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
+SELECT u.id, 150, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 5.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
+SELECT u.id, 145, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 2.5, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
+SELECT u.id, 160, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 10.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
+SELECT u.id, 155, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='harry@example.com' AND g.name='Hacker Club';
 
 ------------------------------------------------------------
 -- Anonymous Group (Ivan, Jane, Karl, Lisa)
--- Ivan: 10.0, 12.0, 9.5, 11.0
+-- Ivan: 120, 150, 135, 160
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 10.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 120, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 12.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 150, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 9.5, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 135, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 11.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 160, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='ivan@example.com' AND g.name='Anonymous Group';
 
--- Jane: 999.0, 995.0, 1005.0, 990.0
+-- Jane: 240, 220, 250, 230
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 999.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 240, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 995.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 220, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 1005.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 250, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 990.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 230, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='jane@example.com' AND g.name='Anonymous Group';
 
--- Karl: 33.3, 35.0, 34.0, 32.5
+-- Karl: 180, 200, 190, 210
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 33.3, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 180, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 35.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 200, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 34.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 190, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 32.5, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 210, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='karl@example.com' AND g.name='Anonymous Group';
 
--- Lisa: 120.0, 125.0, 115.0, 130.0
+-- Lisa: 300, 320, 310, 330
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 120.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 300, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 125.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 320, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 115.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 310, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 130.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
+SELECT u.id, 330, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='lisa@example.com' AND g.name='Anonymous Group';
 
 ------------------------------------------------------------
 -- Gamer Squad (Mike, Nina, Oscar, Paula)
--- Mike: 8.0, 9.0, 7.5, 10.0
+-- Mike: 180, 200, 150, 210
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 8.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 180, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 9.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 200, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 7.5, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 150, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 10.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 210, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='mike@example.com' AND g.name='Gamer Squad';
 
--- Nina: 60.0, 62.0, 58.0, 65.0
+-- Nina: 240, 250, 230, 260
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 60.0, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 240, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 62.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 250, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 58.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 230, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 65.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 260, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='nina@example.com' AND g.name='Gamer Squad';
 
--- Oscar: 120.5, 119.0, 123.0, 118.0
+-- Oscar: 300, 290, 310, 280
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 120.5, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 300, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 119.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 290, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 123.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 310, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 118.0, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 280, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='oscar@example.com' AND g.name='Gamer Squad';
 
--- Paula: 22.2, 20.0, 25.0, 23.5
+-- Paula: 140, 130, 150, 160
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 22.2, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 140, '2024-01-07'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 20.0, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 130, '2024-01-14'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 25.0, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 150, '2024-01-21'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
 INSERT INTO screen_times (user_id, submitted_time, inserted_at)
-SELECT u.id, 23.5, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
+SELECT u.id, 160, '2024-01-28'::timestamp FROM users u, groups g WHERE u.email='paula@example.com' AND g.name='Gamer Squad';
