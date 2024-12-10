@@ -75,7 +75,6 @@ UserGroup.init(
 class ScreenTime extends Model implements Models.ScreenTime {
 	id!: number;
 	user_id!: number;
-	group_id!: number;
 	submitted_time!: number;
 	inserted_at!: Date;
 }
